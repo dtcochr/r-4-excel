@@ -1,2 +1,2 @@
 # r-4-excel
-Upgrading R skills. Integrating with Excell skills.
+Upgrading R skills. Integrating with Excel skills.

@@ -5,6 +5,26 @@ date: "15/02/2022"
 output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries}
+library(tidyverse)
+library(readxl)
+library(here)
+```
+
+```{r import csv}
+ca_np <- read_csv(here("data", "ca_np.csv"))
+```
+
+```{r examine file}
+names(ca_np)
+head(ca_np)
+summary(ca_np)
+```
+
 # Plots with ggplot2
 
 We are going to make plots in R and it's going to be amazing.

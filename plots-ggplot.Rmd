@@ -66,12 +66,31 @@ gg_base +
 ## map variables onto graph aesthetics
 
 gg_base +
-geom_col(aes(fill = visitors)
-         )
+geom_col(aes(fill = visitors))
 
+## Themes
 
+gg_base +
+  geom_point(
+    aes(size = visitors,
+        colour = visitors),
+    pch = 18
+  ) +
+  theme_minimal()
+
+## axis labels and titles
+
+gg_base +
+  geom_line(linetype = "dotted") +
+  theme_bw() +
+  labs(
+    x = "Year",
+    y = "Annual park visitors",
+    title = "Channel Islands NP Visitation",
+    subtitle = "(1963 - 2016)"
+  )
+         
 ```
-
 
 # Plots with ggplot2
 

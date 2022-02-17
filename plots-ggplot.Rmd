@@ -89,7 +89,47 @@ gg_base +
     title = "Channel Islands NP Visitation",
     subtitle = "(1963 - 2016)"
   )
+
+## combine geoms
+
+gg_base +
+  geom_line(color = "black") +
+    geom_point(color = "gray",
+             aes(size = year),
+             pch = 18) 
+
          
+```
+
+```{r multi-series}
+
+## let ggplot know how to group things
+
+## if you don't group
+ggplot(data = ca_np, aes(x = year, y = visitors)) +
+  geom_line()
+
+## when you group
+ggplot(data = ca_np, aes(x= year, y = visitors, group = park_name)) +
+  geom_line()
+
+## create object for top line
+gg_np <- ggplot(data = ca_np, 
+                aes(x = year, y = visitors, group = park_name)
+                )
+
+## faceting
+
+gg_np + geom_line(show.legend = FALSE) +
+  theme_light() +
+  labs(x = "year", y = "annual visitors") +
+  facet_wrap(~ park_name)
+
+## exporting a ggplot graph
+
+ggsave(here("figures", "np_graph.jpg"), dpi = 180, width = 8, height = 7)
+
+ggsave(here("figures", "np_graph.eps"), dpi = 180, width = 8, height = 7)
 ```
 
 # Plots with ggplot2

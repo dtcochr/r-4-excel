@@ -132,6 +132,13 @@ ggsave(here("figures", "np_graph.jpg"), dpi = 180, width = 8, height = 7)
 ggsave(here("figures", "np_graph.eps"), dpi = 180, width = 8, height = 7)
 ```
 
+```{r pivot tables}
+
+
+
+```
+
+
 # Plots with ggplot2
 
 We are going to make plots in R and it's going to be amazing.

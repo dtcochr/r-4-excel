@@ -1,0 +1,84 @@
+---
+title: "pivot_lobsters"
+author: "DTC"
+date: "17/02/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+library(here)
+library(skimr) # install.packages('skimr')
+library(kableExtra) # install.packages('kableExtra')
+
+```
+
+```{r import}
+
+lobsters <- read_xlsx(here("data/lobsters.xlsx"), skip = 4)
+
+## explore data
+
+skimr::skim(lobsters)
+
+```
+
+```{r grouping and summarizing}
+
+## one grouping variable
+
+lobsters %>%
+  group_by(year) %>%
+  summarize(count_by_year = n()
+            )
+
+## two grouping variables
+
+lobsters %>%
+  group_by(site, year) %>%
+  summarize(count_by_year = n()
+            )
+
+## summarize multiple variables
+## save summary as object
+
+siteyear_summary <- lobsters %>%
+  group_by(site, year) %>%
+  summarize(count_by_year = n(),
+            mean_size_mm = mean(size_mm, na.rm=TRUE),
+            sid_size_mm = sd(size_mm, na.rm=TRUE)
+            )
+
+## use kable for formatting
+
+siteyear_summary %>%
+  kable()
+
+```
+
+There are `r nrow(lobsters)` total lobsters included in this report. 
+
+```{r activity}
+
+## calculate median lobster size
+
+siteyear_summary <- lobsters %>%
+  group_by(site, year) %>%
+  summarize(count_by_year = n(),
+            mean_size_mm = mean(size_mm, na.rm=TRUE),
+            sd_size_mm = sd(size_mm, na.rm=TRUE),
+            median_size_mm = median(size_mm, na.rm=TRUE)
+            )
+
+ggplot(data = siteyear_summary, aes(
+  x = year, y = median_size_mm, colour = site)
+  ) +
+  geom_line()
+
+ggsave(here("figures", "lobster-site-sizes.jpg"), dpi = 180, width = 8, height = 7)
+
+```
+
+

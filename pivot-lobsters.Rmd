@@ -79,6 +79,37 @@ ggplot(data = siteyear_summary, aes(
 
 ggsave(here("figures", "lobster-site-sizes.jpg"), dpi = 180, width = 8, height = 7)
 
+ggplot(siteyear_summary, aes(x = year, y = median_size_mm)) +
+  geom_col() +
+  facet_wrap(~site)
+
+ggsave(here("figures", "lobster-size-sizes-cols.jpg"), dpi = 180, width = 8, height = 7)
 ```
 
+```{r summarize_count}
+
+lobsters %>%
+  count(site, year)
+
+## This is the same as:
+lobsters %>%
+  group_by(site, year) %>%
+  summarize(n = n()) %>%
+  ungroup()
+
+```
+
+There are `r count(lobsters)` total lobsters included in this summary.
+
+```{r mutate_and_select}
+
+lobsters_detailed <- lobsters %>%
+  mutate(size_m = size_mm / 1000,
+         millenia = 2000,
+         observer = "Allison Horst")
+
+lobsters_detailed %>%
+  select(date, site, size_m)
+
+```
 

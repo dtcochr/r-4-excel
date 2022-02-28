@@ -95,3 +95,26 @@ fish_it <- fish %>%
 
 ```
 
+```{r join}
+
+## using full_join(), left_join(), inner_join()
+
+abur_kelp_fish <- kelp_abur %>%
+  full_join(fish, by = c("year", "site")
+            )
+
+kelp_fish_left <- kelp_abur %>%
+  left_join(fish, by = "site")
+
+## year in kelp_abur is just two digits
+## does not join nicely
+## likely related to change in name of file
+    # chapter says to read in "kelp_fronds.xlsx"
+        # does not exist
+        # file called "kelp.xlsx" does exist
+
+
+
+```
+
+

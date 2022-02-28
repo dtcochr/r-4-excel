@@ -1,0 +1,97 @@
+---
+title: "filter_join"
+author: "DTC"
+date: "28/02/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(kableExtra) #install.packages("kableExtra")
+library(readxl)
+
+```
+
+```{r read in & explore data}
+
+fish <- read_csv(here("data", "fish.csv")
+                 )
+
+kelp_abur <- read_excel(here("data", "kelp.xlsx"), sheet = "abur")
+
+summary(fish)
+summary(kelp_abur)
+
+head(fish)
+head(kelp_abur)
+
+tail(fish)
+tail(kelp_abur)
+
+
+```
+
+```{r filter}
+
+## use dplyr::filter to conditionally subset rows
+
+fish_garibaldi <- fish %>%
+  filter(common_name == "garibaldi")
+
+## activity: create subset of "fish" data frame with just "mohk"
+
+fish_mohk <- fish %>%
+  filter(site == "mohk")
+
+## filter rows based on numeric conditions
+
+fish_over50 <- fish %>%
+  filter(total_count >= 50)
+
+## filter to return rows that match this OR that OR that
+
+fish_3sp <- fish %>%
+  filter(common_name == "garibaldi" |
+           common_name == "blacksmith" |
+           common_name == "black surfperch")
+
+#alternative when filtering for multiple options within same variable
+fish_3sp <- fish %>%
+  filter(common_name %in% c("garibaldi", "blacksmith", "black surfperch")
+         )
+
+## activity: create subset from "fish" for all observations in 2016 OR common name "garibaldi"
+
+fish_gar_2016 <- fish %>%
+  filter(year == 2016 |
+           common_name == "garibaldi")
+
+## filter to return observations that match this AND that
+
+aque_2018 <- fish %>%
+  filter(year == 2018, site == "aque") # comma (,) or ampersand (&) work for 'and'
+
+## activity: create a subset that contains only (garibaldi OR rock wrasse) AND total_count <= 10
+
+low_gb_wr <- fish %>%
+  filter(common_name %in% c("garibaldi", "rock wrasse") &
+           total_count <= 10)
+
+## stringr::str_detect() to filter by partial pattern
+
+fish_bl <- fish %>%
+  filter(str_detect(common_name, pattern = "black")
+         )
+
+## activity: create object that only contains common_name observations containing "it" string
+
+fish_it <- fish %>%
+  filter(str_detect(common_name, pattern = "it")
+         )
+
+## can EXCLUDE by adding negate = TRUE within str_detect
+
+```
+

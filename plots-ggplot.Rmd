@@ -7,13 +7,14 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(Cairo) #install.packages("Cairo")
+library(knitr) #install.packages("knitr")
+library(here) #install.packages("here")
+library(tidyverse) #install.packages("tidyverse")
+library(readxl) #install.packages("readxl")
 ```
 
-```{r libraries}
-library(tidyverse)
-library(readxl)
-library(here)
-```
 
 ```{r import csv}
 ca_np <- read_csv(here("data", "ca_np.csv"))
@@ -33,7 +34,7 @@ ci_np <- read_excel(here("data", "ci_np.xlsx"))
 
 ```{r examine ci_np file}
 
-view(ci_np)
+#view(ci_np)
 names(ci_np)
 head(ci_np)
 summary(ci_np)
@@ -47,8 +48,9 @@ gg_base +
   geom_point(
     colour = "purple",
     pch = 18,
-    size = 4
-  ) +
+    size = 4,
+    alpha = 0.5
+  ) #+
   geom_point(
     colour = "white",
     pch = 18,
